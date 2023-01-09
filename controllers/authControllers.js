@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const AsyncManager = require("../utils/asyncManager");
+const TwoFactorError = require("../utils/twoFactorError");
 
 const cookieTokenResponse = (user, statusCode, res) => {
     const token = user.signJwtToken();
@@ -31,4 +32,20 @@ exports.registerUser = AsyncManager(async (req, res, next) => {
         confirmPassword,
     });
     cookieTokenResponse(newUser, 201, res);
+});
+
+exports.loginUser = AsyncManager(async (req, res, next) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+        return next(
+            new TwoFactorError("Please provide an email and password!", 400)
+        );
+    }
+
+    const user = await User.findOne({ email }).select("+password");
+    if (!user || !(await user.correctPassword(password, user.password))) {
+        return next(new TwoFactorError("Incorrect email or password!", 401));
+    }
+
+    cookieTokenResponse(user, 200, res);
 });
