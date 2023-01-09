@@ -7,6 +7,8 @@ WORKDIR /app
 
 COPY package*.json ./
 
+RUN npm install -S validator
+RUN npm install -S bcryptjs
 RUN npm install && npm cache clean --force
 
 COPY . .

@@ -22,10 +22,13 @@
   "homepage": "https://github.com/andrasneistvankiss/2-factor-authentication#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.8.3",
+    "qrcode": "^1.5.1",
+    "speakeasy": "^2.0.0",
     "validator": "^13.7.0"
   },
   "devDependencies": {
