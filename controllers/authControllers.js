@@ -49,3 +49,11 @@ exports.loginUser = AsyncManager(async (req, res, next) => {
 
     cookieTokenResponse(user, 200, res);
 });
+
+exports.logoutUser = AsyncManager(async (req, res, next) => {
+    res.cookie("facade", "logged out", {
+        expires: new Date(Date.now() + 10 * 1000),
+        httpOnly: true,
+    });
+    res.status(200).json({ message: "success" });
+});
