@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
-const { mongooseErrorHandler, mongoose } = require("mongoose");
+const { mongoose } = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
     name: {
@@ -31,6 +31,8 @@ const UserSchema = new mongoose.Schema({
             message: "Passwords do not match",
         },
     },
+    twoFactorAuthCode: String,
+    twoFactorAuthEnabled: Boolean,
 });
 
 UserSchema.pre("save", async function (next) {
